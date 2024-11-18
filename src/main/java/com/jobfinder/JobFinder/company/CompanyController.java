@@ -17,8 +17,12 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<Company> getAllCompanies(){
-        return companyService.getAllCompanies();
+    public ResponseEntity<List<Company>> getAllCompanies(){
+       List<Company> companies = companyService.getAllCompanies();
+       if(companies.isEmpty()){
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
+       return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -39,8 +43,11 @@ public class CompanyController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCompany(@PathVariable Long id){
-        companyService.deleteCompany(id);
-        return new ResponseEntity<>("Deleted successfully!", HttpStatus.NO_CONTENT);
+        boolean isDeleted = companyService.deleteCompany(id);
+        if(isDeleted){
+            return new ResponseEntity<>("Deleted successfully!", HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>("Something went wrong!", HttpStatus.BAD_REQUEST);
     }
 
 }

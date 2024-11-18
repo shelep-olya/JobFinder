@@ -48,8 +48,12 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void deleteCompany(Long id){
-        companyRepository.deleteById(id);
+    public boolean deleteCompany(Long id){
+        if(companyRepository.existsById(id)){
+            companyRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
 }

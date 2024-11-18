@@ -1,4 +1,5 @@
 package com.jobfinder.JobFinder.job;
+import com.jobfinder.JobFinder.company.Company;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
